@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { MainNav } from "@/components/main-nav";
+import { blogPosts } from "@/lib/content";
 
 export function HomeScene() {
   const [progress, setProgress] = useState(0);
@@ -29,6 +30,17 @@ export function HomeScene() {
     [progress],
   );
 
+  const logoStyle = useMemo(
+    () =>
+      ({
+        transform: `translate(-50%, calc(-50% - ${progress * 41}vh)) scale(${
+          1 - progress * 0.82
+        })`,
+        opacity: 1 - progress * 0.04,
+      }) as CSSProperties,
+    [progress],
+  );
+
   return (
     <div className="home-page" style={style}>
       <header
@@ -36,20 +48,18 @@ export function HomeScene() {
         data-visible={progress > 0.12 ? "true" : undefined}
       >
         <MainNav className="topbar-nav" />
-        <div className="topbar-brand">
-          <BrandMark className="brand-mark-small" />
-        </div>
       </header>
+
+      <div className="home-traveling-brand" style={logoStyle}>
+        <BrandMark
+          className="brand-mark-large"
+          priority
+          transitionName="brand-mark"
+        />
+      </div>
 
       <section className="home-hero-shell">
         <div className="home-hero-stage">
-          <div className="hero-brand-wrap">
-            <BrandMark
-              className="brand-mark-large"
-              priority
-              transitionName="brand-mark"
-            />
-          </div>
           <MainNav className="hero-nav" />
         </div>
       </section>
@@ -66,9 +76,24 @@ export function HomeScene() {
           <div className="preview-column">
             <h2>Shared transition into the top bar.</h2>
             <p>
-              The same wordmark is reused as a shared element so route changes
-              feel continuous instead of abrupt.
+              The home keeps a single logo instance and docks it into the top
+              area as you scroll instead of rendering two competing marks.
             </p>
+          </div>
+        </div>
+
+        <div className="home-latest">
+          <h2 className="home-latest-title">Latest Posts</h2>
+          <div className="home-latest-list">
+            {blogPosts.slice(0, 6).map((post) => (
+              <article className="section-row" key={`${post.date}-${post.title}`}>
+                <div className="section-row-main">
+                  <h2>{post.title}</h2>
+                  <p>{post.summary}</p>
+                </div>
+                <div className="section-row-date">{post.date}</div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

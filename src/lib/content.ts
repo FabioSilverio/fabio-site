@@ -19,6 +19,36 @@ export const blogPosts = [
     date: "2026-04-05",
     summary: "A restrained palette tends to age better when the typography is carrying the page.",
   },
+  {
+    title: "HOW TO MAKE A HERO FEEL CALM",
+    date: "2026-03-31",
+    summary: "Reducing visual noise often does more for impact than adding one more animated layer.",
+  },
+  {
+    title: "DOCKING A LOGO INTO THE TOPBAR",
+    date: "2026-03-24",
+    summary: "A single moving mark reads cleaner than swapping between two separate elements.",
+  },
+  {
+    title: "VIEW TRANSITIONS IN THE APP ROUTER",
+    date: "2026-03-17",
+    summary: "What shared elements do well, where they break, and how to keep the effect believable.",
+  },
+  {
+    title: "WHEN TYPOGRAPHY IS THE BRAND",
+    date: "2026-03-10",
+    summary: "If the wordmark carries the screen, the spacing and scale have to be exact.",
+  },
+  {
+    title: "WHY BLACK BACKGROUNDS EXPOSE BAD LAYOUTS",
+    date: "2026-03-04",
+    summary: "Dark interfaces can look premium, but they also make sloppy alignment obvious instantly.",
+  },
+  {
+    title: "SCROLL AS A STATE MACHINE",
+    date: "2026-02-25",
+    summary: "Treating scroll positions as transition states keeps motion design coherent and debuggable.",
+  },
 ];
 
 export const talks = [
