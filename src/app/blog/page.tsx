@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { SectionPage } from "@/components/section-page";
-import { blogPosts } from "@/lib/content";
+import { BlogList } from "@/components/blog-list";
+import { InnerHeader } from "@/components/inner-header";
 
 export const metadata: Metadata = {
   title: "blog",
@@ -8,10 +8,13 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <SectionPage
-      title="Latest Posts"
-      type="posts"
-      items={blogPosts}
-    />
+    <div className="section-page">
+      <InnerHeader />
+
+      <div className="section-page-inner">
+        <h1 className="section-title">Latest Posts</h1>
+        <BlogList />
+      </div>
+    </div>
   );
 }

@@ -2,9 +2,9 @@
 
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
+import { BlogList } from "@/components/blog-list";
 import { BrandMark } from "@/components/brand-mark";
 import { MainNav } from "@/components/main-nav";
-import { blogPosts } from "@/lib/content";
 
 export function HomeScene() {
   const [progress, setProgress] = useState(0);
@@ -33,7 +33,7 @@ export function HomeScene() {
   const logoStyle = useMemo(
     () =>
       ({
-        transform: `translate(-50%, calc(-50% - ${progress * 41}vh)) scale(${
+        transform: `translate(-50%, calc(-50% - ${progress * 46}vh)) scale(${
           1 - progress * 0.82
         })`,
         opacity: 1 - progress * 0.04,
@@ -83,18 +83,7 @@ export function HomeScene() {
         </div>
 
         <div className="home-latest">
-          <h2 className="home-latest-title">Latest Posts</h2>
-          <div className="home-latest-list">
-            {blogPosts.slice(0, 6).map((post) => (
-              <article className="section-row" key={`${post.date}-${post.title}`}>
-                <div className="section-row-main">
-                  <h2>{post.title}</h2>
-                  <p>{post.summary}</p>
-                </div>
-                <div className="section-row-date">{post.date}</div>
-              </article>
-            ))}
-          </div>
+          <BlogList limit={6} title="Latest Posts" />
         </div>
       </section>
     </div>

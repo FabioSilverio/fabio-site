@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { BlogStoreProvider } from "@/components/blog-store-provider";
 import { ViewTransitions } from "next-view-transitions";
 import "./globals.css";
 
@@ -26,10 +27,12 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="pt-BR">
         <body className={sans.variable}>
-          <main>{children}</main>
-          <footer className="site-footer">
-            <p>All Rights Reserved.</p>
-          </footer>
+          <BlogStoreProvider>
+            <main>{children}</main>
+            <footer className="site-footer">
+              <p>All Rights Reserved.</p>
+            </footer>
+          </BlogStoreProvider>
         </body>
       </html>
     </ViewTransitions>
