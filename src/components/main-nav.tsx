@@ -2,19 +2,14 @@
 
 import { usePathname } from "next/navigation";
 import { TransitionLink } from "@/components/transition-link";
-
-const items = [
-  { href: "/blog", label: "BLOG" },
-  { href: "/talks", label: "TALKS" },
-  { href: "/media", label: "MEDIA" },
-  { href: "/projects", label: "PROJECTS" },
-];
+import type { NavItem } from "@/lib/cms-shared";
 
 type MainNavProps = {
   className?: string;
+  items: NavItem[];
 };
 
-export function MainNav({ className }: MainNavProps) {
+export function MainNav({ className, items }: MainNavProps) {
   const pathname = usePathname();
 
   return (

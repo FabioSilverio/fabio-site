@@ -1,4 +1,5 @@
 import { InnerHeader } from "@/components/inner-header";
+import type { NavItem } from "@/lib/cms-shared";
 
 type SectionItem = {
   date: string;
@@ -7,15 +8,22 @@ type SectionItem = {
 };
 
 type SectionPageProps = {
+  brandText: string;
   items: SectionItem[];
+  navItems: NavItem[];
   title: string;
   type: "posts";
 };
 
-export function SectionPage({ items, title }: SectionPageProps) {
+export function SectionPage({
+  brandText,
+  items,
+  navItems,
+  title,
+}: SectionPageProps) {
   return (
     <div className="section-page">
-      <InnerHeader />
+      <InnerHeader brandText={brandText} navItems={navItems} />
 
       <div className="section-page-inner">
         <h1 className="section-title">{title}</h1>

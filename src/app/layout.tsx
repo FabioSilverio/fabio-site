@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { BlogStoreProvider } from "@/components/blog-store-provider";
 import { ViewTransitions } from "next-view-transitions";
+import { getSiteConfig } from "@/lib/cms";
 import "./globals.css";
 
 const sans = Geist({
@@ -18,21 +18,21 @@ export const metadata: Metadata = {
     "Site escuro com logo central, navegação suave e transições inspiradas na referência enviada para Fabio.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteConfig = await getSiteConfig();
+
   return (
     <ViewTransitions>
       <html lang="pt-BR">
         <body className={sans.variable}>
-          <BlogStoreProvider>
-            <main>{children}</main>
-            <footer className="site-footer">
-              <p>All Rights Reserved.</p>
-            </footer>
-          </BlogStoreProvider>
+          <main>{children}</main>
+          <footer className="site-footer">
+            <p>{siteConfig.footerText}</p>
+          </footer>
         </body>
       </html>
     </ViewTransitions>

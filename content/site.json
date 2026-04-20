@@ -1,0 +1,26 @@
+{
+  "siteTitle": "fabio",
+  "footerText": "All Rights Reserved.",
+  "navLinks": [
+    {
+      "id": "blog",
+      "label": "BLOG",
+      "href": "/blog"
+    },
+    {
+      "id": "talks",
+      "label": "TALKS",
+      "href": "/talks"
+    },
+    {
+      "id": "media",
+      "label": "MEDIA",
+      "href": "/media"
+    },
+    {
+      "id": "projects",
+      "label": "PROJECTS",
+      "href": "/projects"
+    }
+  ]
+}

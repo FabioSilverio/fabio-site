@@ -5,8 +5,19 @@ import { useEffect, useMemo, useState } from "react";
 import { BlogList } from "@/components/blog-list";
 import { BrandMark } from "@/components/brand-mark";
 import { MainNav } from "@/components/main-nav";
+import type { BlogPost, NavItem } from "@/lib/cms-shared";
 
-export function HomeScene() {
+type HomeSceneProps = {
+  brandText: string;
+  latestPosts: BlogPost[];
+  navItems: NavItem[];
+};
+
+export function HomeScene({
+  brandText,
+  latestPosts,
+  navItems,
+}: HomeSceneProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -33,7 +44,7 @@ export function HomeScene() {
   const logoStyle = useMemo(
     () =>
       ({
-        transform: `translate(-50%, calc(-50% - ${progress * 46}vh)) scale(${
+        transform: `translate(-50%, calc(-50% - ${progress * 49}vh)) scale(${
           1 - progress * 0.82
         })`,
         opacity: 1 - progress * 0.04,
@@ -47,20 +58,21 @@ export function HomeScene() {
         className="home-topbar"
         data-visible={progress > 0.12 ? "true" : undefined}
       >
-        <MainNav className="topbar-nav" />
+        <MainNav className="topbar-nav" items={navItems} />
       </header>
 
       <div className="home-traveling-brand" style={logoStyle}>
         <BrandMark
           className="brand-mark-large"
           priority
+          text={brandText}
           transitionName="brand-mark"
         />
       </div>
 
       <section className="home-hero-shell">
         <div className="home-hero-stage">
-          <MainNav className="hero-nav" />
+          <MainNav className="hero-nav" items={navItems} />
         </div>
       </section>
 
@@ -83,7 +95,7 @@ export function HomeScene() {
         </div>
 
         <div className="home-latest">
-          <BlogList limit={6} title="Latest Posts" />
+          <BlogList limit={10} posts={latestPosts} title="Latest Posts" />
         </div>
       </section>
     </div>

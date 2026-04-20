@@ -106,10 +106,10 @@ a {
   left: 50%;
   width: var(--shell);
   transform: translateX(-50%);
-  height: 58px;
+  height: 72px;
   display: flex;
   align-items: center;
-  align-items: center;
+  padding-top: 10px;
   z-index: 20;
   pointer-events: none;
 }
@@ -123,7 +123,7 @@ a {
   content: "";
   position: absolute;
   inset: 0 0 auto;
-  height: 58px;
+  height: 72px;
   background: linear-gradient(180deg, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0));
   z-index: -1;
 }
@@ -153,13 +153,18 @@ a {
 .topbar-nav {
   justify-content: flex-start;
   pointer-events: auto;
+  position: relative;
+  z-index: 2;
   transition:
     opacity 240ms ease,
     transform 320ms var(--curve);
 }
 
 .topbar-brand {
-  justify-self: center;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
   pointer-events: auto;
   transition:
     opacity 240ms ease,
@@ -168,7 +173,7 @@ a {
 
 .home-traveling-brand {
   position: fixed;
-  top: 48%;
+  top: 50%;
   left: 50%;
   z-index: 18;
   transform-origin: center center;
@@ -389,6 +394,13 @@ a {
   gap: 24px;
 }
 
+.admin-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .admin-title {
   margin-bottom: 10px;
   text-align: left;
@@ -406,6 +418,11 @@ a {
   grid-template-columns: 300px minmax(0, 1fr);
   gap: 28px;
   margin-top: 30px;
+}
+
+.admin-stack {
+  display: grid;
+  gap: 28px;
 }
 
 .admin-sidebar,
@@ -462,6 +479,10 @@ a {
   font-size: 0.8rem;
 }
 
+.admin-post-item[data-active] {
+  border-color: rgba(130, 163, 255, 0.45);
+}
+
 .admin-form {
   display: grid;
   gap: 16px;
@@ -493,10 +514,53 @@ a {
   resize: vertical;
 }
 
+.admin-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-panel-head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.admin-slug-chip {
+  color: #969696;
+  font-size: 0.82rem;
+}
+
 .admin-form-row {
   display: grid;
   grid-template-columns: 1.2fr 180px;
   gap: 16px;
+}
+
+.admin-links-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-links-label {
+  color: #bdbdbd;
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-link-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-link-row {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr) auto;
+  gap: 10px;
 }
 
 .admin-actions {
@@ -528,6 +592,51 @@ a {
 .admin-message {
   color: #94b3ff;
   font-size: 0.9rem;
+}
+
+.admin-login-page {
+  display: grid;
+  place-items: center;
+  padding: 40px 24px;
+}
+
+.admin-login-card {
+  width: min(460px, 100%);
+  border: 1px solid var(--line);
+  background: #090909;
+  padding: 28px;
+}
+
+.admin-login-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.admin-login-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-login-form span {
+  color: #bdbdbd;
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-login-form input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #050505;
+  color: var(--text);
+  padding: 14px 16px;
+  outline: none;
+}
+
+.admin-error {
+  margin: 14px 0 0;
+  color: #ff9b9b;
 }
 
 ::view-transition-old(root) {
@@ -610,20 +719,18 @@ a {
 
   .home-topbar,
   .inner-header {
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 10px;
-    height: auto;
+    height: 92px;
     padding-top: 10px;
   }
 
   .topbar-nav {
     justify-content: center;
-    order: 2;
+    width: 100%;
+    padding-top: 34px;
   }
 
   .topbar-brand {
-    order: 1;
+    top: 8px;
   }
 
   .brand-mark-large {
@@ -643,6 +750,10 @@ a {
   .admin-page-inner {
     width: min(1040px, calc(100vw - 28px));
     padding-top: 118px;
+  }
+
+  .admin-link-row {
+    grid-template-columns: 1fr;
   }
 }
 

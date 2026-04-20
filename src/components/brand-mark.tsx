@@ -3,12 +3,14 @@ import type { CSSProperties } from "react";
 type BrandMarkProps = {
   className?: string;
   priority?: boolean;
+  text?: string;
   transitionName?: string;
 };
 
 export function BrandMark({
   className,
   priority = false,
+  text = "FABIO",
   transitionName,
 }: BrandMarkProps) {
   const style = transitionName
@@ -17,7 +19,7 @@ export function BrandMark({
 
   return (
     <svg
-      aria-label="fabio"
+      aria-label={text.toLowerCase()}
       className={className}
       style={style}
       viewBox="0 0 760 180"
@@ -31,7 +33,7 @@ export function BrandMark({
         className="brand-text-svg"
         data-priority={priority || undefined}
       >
-        FABIO
+        {text.toUpperCase()}
       </text>
     </svg>
   );

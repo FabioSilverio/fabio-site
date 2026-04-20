@@ -1,23 +1,15 @@
-"use client";
-
-import { useMemo } from "react";
-import { useBlogStore } from "@/components/blog-store-provider";
 import { TransitionLink } from "@/components/transition-link";
-import { type BlogPost } from "@/lib/blog";
+import type { BlogPost } from "@/lib/cms-shared";
 
 type BlogListProps = {
   emptyMessage?: string;
   limit?: number;
+  posts: BlogPost[];
   title?: string;
 };
 
-export function BlogList({ emptyMessage, limit, title }: BlogListProps) {
-  const { posts } = useBlogStore();
-
-  const visiblePosts = useMemo(
-    () => (typeof limit === "number" ? posts.slice(0, limit) : posts),
-    [limit, posts],
-  );
+export function BlogList({ emptyMessage, limit, posts, title }: BlogListProps) {
+  const visiblePosts = typeof limit === "number" ? posts.slice(0, limit) : posts;
 
   if (!visiblePosts.length) {
     return <p className="section-empty">{emptyMessage ?? "No posts yet."}</p>;
@@ -39,10 +31,7 @@ function BlogListItem({ post }: { post: BlogPost }) {
   return (
     <article className="section-row">
       <div className="section-row-main">
-        <TransitionLink
-          className="post-link"
-          href={`/blog/${post.slug}`}
-        >
+        <TransitionLink className="post-link" href={`/blog/${post.slug}`}>
           <h2>{post.title}</h2>
         </TransitionLink>
         <p>{post.summary}</p>

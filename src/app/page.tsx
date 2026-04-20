@@ -1,5 +1,14 @@
 import { HomeScene } from "@/components/home-scene";
+import { getPosts, getSiteConfig } from "@/lib/cms";
 
-export default function Home() {
-  return <HomeScene />;
+export default async function Home() {
+  const [posts, siteConfig] = await Promise.all([getPosts(), getSiteConfig()]);
+
+  return (
+    <HomeScene
+      brandText={siteConfig.siteTitle}
+      latestPosts={posts}
+      navItems={siteConfig.navLinks}
+    />
+  );
 }
