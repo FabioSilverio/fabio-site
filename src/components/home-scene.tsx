@@ -44,7 +44,7 @@ export function HomeScene({
   const logoStyle = useMemo(
     () =>
       ({
-        transform: `translate(-50%, calc(-50% - ${progress * 49}vh)) scale(${
+        transform: `translate(-50%, calc(-50% - ${progress * 46.5}vh)) scale(${
           1 - progress * 0.82
         })`,
         opacity: 1 - progress * 0.04,

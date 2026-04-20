@@ -106,10 +106,10 @@ a {
   left: 50%;
   width: var(--shell);
   transform: translateX(-50%);
-  height: 72px;
+  height: 78px;
   display: flex;
   align-items: center;
-  padding-top: 10px;
+  padding-top: 14px;
   z-index: 20;
   pointer-events: none;
 }
@@ -118,13 +118,38 @@ a {
   pointer-events: auto;
 }
 
+.home-topbar::before,
+.inner-header::before,
 .home-topbar::after,
 .inner-header::after {
   content: "";
   position: absolute;
+  pointer-events: none;
+}
+
+.home-topbar::before,
+.inner-header::before {
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 132px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.985) 0%,
+      rgba(5, 5, 5, 0.965) 38%,
+      rgba(5, 5, 5, 0.84) 70%,
+      rgba(5, 5, 5, 0) 100%
+    );
+  z-index: -2;
+}
+
+.home-topbar::after,
+.inner-header::after {
   inset: 0 0 auto;
-  height: 72px;
-  background: linear-gradient(180deg, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0));
+  height: 78px;
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.58));
   z-index: -1;
 }
 
@@ -162,7 +187,7 @@ a {
 
 .topbar-brand {
   position: absolute;
-  top: 12px;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -719,18 +744,18 @@ a {
 
   .home-topbar,
   .inner-header {
-    height: 92px;
-    padding-top: 10px;
+    height: 96px;
+    padding-top: 12px;
   }
 
   .topbar-nav {
     justify-content: center;
     width: 100%;
-    padding-top: 34px;
+    padding-top: 40px;
   }
 
   .topbar-brand {
-    top: 8px;
+    top: 12px;
   }
 
   .brand-mark-large {
