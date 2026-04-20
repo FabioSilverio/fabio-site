@@ -25,7 +25,7 @@ export function BrandMark({
     >
       <text
         x="50%"
-        y="58%"
+        y="54%"
         textAnchor="middle"
         dominantBaseline="middle"
         className="brand-text-svg"

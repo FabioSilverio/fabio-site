@@ -1,10 +1,40 @@
+"use client";
+
+import type { CSSProperties } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BrandMark } from "@/components/brand-mark";
 import { MainNav } from "@/components/main-nav";
 
 export function HomeScene() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const limit = window.innerHeight * 0.72;
+      const next = Math.max(0, Math.min(window.scrollY / limit, 1));
+      setProgress(next);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const style = useMemo(
+    () =>
+      ({
+        "--hero-progress": progress,
+      }) as CSSProperties,
+    [progress],
+  );
+
   return (
-    <div className="home-page">
-      <header className="home-topbar" data-visible="true">
+    <div className="home-page" style={style}>
+      <header
+        className="home-topbar"
+        data-visible={progress > 0.12 ? "true" : undefined}
+      >
         <MainNav className="topbar-nav" />
         <div className="topbar-brand">
           <BrandMark className="brand-mark-small" />

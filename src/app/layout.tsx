@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist } from "next/font/google";
 import { ViewTransitions } from "next-view-transitions";
 import "./globals.css";
 
-const sans = Inter({
-  variable: "--font-sans",
+const sans = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 

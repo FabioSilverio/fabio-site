@@ -19,7 +19,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans), Arial, sans-serif;
+  font-family: var(--font-geist), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -48,17 +48,15 @@ a {
 }
 
 .brand-text-svg {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 8;
-  paint-order: stroke;
-  font-size: 138px;
-  font-weight: 800;
-  letter-spacing: -0.14em;
+  fill: currentColor;
+  font-family: var(--font-geist), Arial, sans-serif;
+  font-size: 154px;
+  font-weight: 700;
+  letter-spacing: -0.11em;
 }
 
 .brand-text-svg[data-priority] {
-  stroke-width: 7;
+  font-size: 176px;
 }
 
 .brand-mark-large,
@@ -68,11 +66,11 @@ a {
 }
 
 .brand-mark-large {
-  width: min(54vw, 480px);
+  width: min(78vw, 760px);
 }
 
 .brand-mark-small {
-  width: 118px;
+  width: 108px;
 }
 
 .nav-link {
@@ -131,18 +129,41 @@ a {
 }
 
 .home-topbar {
-  opacity: 1;
+  opacity: 0;
   transform: translateX(-50%) translateY(0);
+  transition:
+    opacity 240ms ease,
+    transform 320ms var(--curve);
+}
+
+.home-topbar[data-visible] {
+  opacity: 1;
+}
+
+.home-topbar:not([data-visible]) {
+  transform: translateX(-50%) translateY(-12px);
+}
+
+.home-topbar:not([data-visible]) .topbar-nav,
+.home-topbar:not([data-visible]) .topbar-brand {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .topbar-nav {
   justify-self: start;
   pointer-events: auto;
+  transition:
+    opacity 240ms ease,
+    transform 320ms var(--curve);
 }
 
 .topbar-brand {
   justify-self: center;
   pointer-events: auto;
+  transition:
+    opacity 240ms ease,
+    transform 320ms var(--curve);
 }
 
 .home-hero-shell {
@@ -161,11 +182,23 @@ a {
 }
 
 .hero-brand-wrap {
-  transform: translateY(-1.2vh);
+  transform:
+    translateY(calc(var(--hero-progress, 0) * -31vh))
+    scale(calc(1 - (var(--hero-progress, 0) * 0.7)));
+  transform-origin: center center;
+  opacity: calc(1 - (var(--hero-progress, 0) * 0.86));
+  transition:
+    transform 120ms linear,
+    opacity 120ms linear;
 }
 
 .hero-nav {
   margin-top: 24px;
+  opacity: calc(1 - (var(--hero-progress, 0) * 1.45));
+  transform: translateY(calc(var(--hero-progress, 0) * -24px));
+  transition:
+    opacity 120ms linear,
+    transform 120ms linear;
 }
 
 .home-preview {
@@ -255,16 +288,60 @@ a {
   padding-top: 5px;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 360ms;
-  animation-timing-function: var(--curve);
+::view-transition-old(root) {
+  animation: root-fade-out 220ms ease both;
 }
 
-::view-transition-old(brand-mark),
+::view-transition-new(root) {
+  animation: root-fade-in 320ms ease both;
+}
+
+::view-transition-old(brand-mark) {
+  animation: brand-shrink-out 280ms ease both;
+}
+
 ::view-transition-new(brand-mark) {
-  animation-duration: 420ms;
-  animation-timing-function: var(--curve);
+  animation: brand-grow-in 420ms var(--curve) both;
+}
+
+@keyframes root-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.92;
+  }
+}
+
+@keyframes root-fade-in {
+  from {
+    opacity: 0.86;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brand-shrink-out {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.88;
+    filter: blur(1px);
+  }
+}
+
+@keyframes brand-grow-in {
+  from {
+    opacity: 0.78;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 @media (max-width: 900px) {
@@ -301,11 +378,11 @@ a {
   }
 
   .brand-mark-large {
-    width: min(84vw, 460px);
+    width: min(92vw, 640px);
   }
 
   .brand-text-svg {
-    font-size: 142px;
+    font-size: 138px;
   }
 
   .section-page-inner {
