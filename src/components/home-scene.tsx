@@ -59,6 +59,9 @@ export function HomeScene({
         data-visible={progress > 0.12 ? "true" : undefined}
       >
         <MainNav className="topbar-nav" items={navItems} />
+        <div aria-hidden="true" className="topbar-brand">
+          <BrandMark className="brand-mark-small" text={brandText} />
+        </div>
       </header>
 
       <div className="home-traveling-brand" style={logoStyle}>
@@ -88,8 +91,8 @@ export function HomeScene({
           <div className="preview-column">
             <h2>Shared transition into the top bar.</h2>
             <p>
-              The home keeps a single logo instance and docks it into the top
-              area as you scroll instead of rendering two competing marks.
+              The home keeps the logo readable as it docks into the top area,
+              with the fixed mark staying above the header gradient on scroll.
             </p>
           </div>
         </div>
