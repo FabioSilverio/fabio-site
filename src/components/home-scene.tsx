@@ -5,20 +5,27 @@ import { useEffect, useMemo, useState } from "react";
 import { BlogList } from "@/components/blog-list";
 import { BrandMark } from "@/components/brand-mark";
 import { MainNav } from "@/components/main-nav";
-import type { BlogPost, NavItem } from "@/lib/cms-shared";
+import type {
+  BlogPost,
+  HomePreviewSection,
+  NavItem,
+} from "@/lib/cms-shared";
 
 type HomeSceneProps = {
   brandText: string;
+  homePreviewSections: HomePreviewSection[];
   latestPosts: BlogPost[];
   navItems: NavItem[];
 };
 
 export function HomeScene({
   brandText,
+  homePreviewSections,
   latestPosts,
   navItems,
 }: HomeSceneProps) {
   const [progress, setProgress] = useState(0);
+  const docked = progress > 0.56;
 
   useEffect(() => {
     const onScroll = () => {
@@ -42,13 +49,15 @@ export function HomeScene({
   );
 
   const logoStyle = useMemo(
-    () =>
-      ({
-        transform: `translate(-50%, calc(-50% - ${progress * 46.5}vh)) scale(${
-          1 - progress * 0.82
+    () => {
+      const dockProgress = Math.min(progress / 0.56, 1);
+
+      return {
+        transform: `translate(-50%, calc(-50% - ${dockProgress * 46.5}vh)) scale(${
+          1 - dockProgress * 0.82
         })`,
-        opacity: 1 - progress * 0.04,
-      }) as CSSProperties,
+      } as CSSProperties;
+    },
     [progress],
   );
 
@@ -56,45 +65,43 @@ export function HomeScene({
     <div className="home-page" style={style}>
       <header
         className="home-topbar"
-        data-visible={progress > 0.12 ? "true" : undefined}
+        data-visible={docked ? "true" : undefined}
       >
-        <MainNav className="topbar-nav" items={navItems} />
-        <div aria-hidden="true" className="topbar-brand">
-          <BrandMark className="brand-mark-small" text={brandText} />
-        </div>
+        {docked ? (
+          <>
+            <MainNav className="topbar-nav" items={navItems} />
+            <div aria-hidden="true" className="topbar-brand">
+              <BrandMark className="brand-mark-small" text={brandText} />
+            </div>
+          </>
+        ) : null}
       </header>
 
-      <div className="home-traveling-brand" style={logoStyle}>
-        <BrandMark
-          className="brand-mark-large"
-          priority
-          text={brandText}
-          transitionName="brand-mark"
-        />
-      </div>
+      {!docked ? (
+        <div className="home-traveling-brand" style={logoStyle}>
+          <BrandMark
+            className="brand-mark-large"
+            priority
+            text={brandText}
+            transitionName="brand-mark"
+          />
+        </div>
+      ) : null}
 
       <section className="home-hero-shell">
         <div className="home-hero-stage">
-          <MainNav className="hero-nav" items={navItems} />
+          {!docked ? <MainNav className="hero-nav" items={navItems} /> : null}
         </div>
       </section>
 
       <section className="home-preview">
         <div className="home-preview-inner">
-          <div className="preview-column">
-            <h2>Minimal home, sharp internals.</h2>
-            <p>
-              A home clean enough to feel deliberate, with the logo centered and
-              motion reserved for the moments that matter.
-            </p>
-          </div>
-          <div className="preview-column">
-            <h2>Shared transition into the top bar.</h2>
-            <p>
-              The home keeps the logo readable as it docks into the top area,
-              with the fixed mark staying above the header gradient on scroll.
-            </p>
-          </div>
+          {homePreviewSections.map((section) => (
+            <div className="preview-column" key={section.id}>
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
+            </div>
+          ))}
         </div>
 
         <div className="home-latest">

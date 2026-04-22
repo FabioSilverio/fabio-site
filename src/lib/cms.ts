@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import {
+  type HomePreviewSection,
   slugifyTitle,
   sortPosts,
   type BlogPost,
@@ -25,6 +26,20 @@ const siteFilePath = path.join(contentDirectory, "site.json");
 const defaultSiteConfig: SiteConfig = {
   siteTitle: "fabio",
   footerText: "All Rights Reserved.",
+  homePreviewSections: [
+    {
+      id: "minimal-home-sharp-internals",
+      title: "Minimal home, sharp internals.",
+      body:
+        "A home clean enough to feel deliberate, with the logo centered and motion reserved for the moments that matter.",
+    },
+    {
+      id: "shared-transition-into-the-top-bar",
+      title: "Shared transition into the top bar.",
+      body:
+        "The home keeps the logo readable as it docks into the top area, with the fixed mark staying above the header gradient on scroll.",
+    },
+  ],
   navLinks: [
     { id: "blog", label: "BLOG", href: "/blog" },
     { id: "talks", label: "TALKS", href: "/talks" },
@@ -106,6 +121,34 @@ function sanitizeNavItem(value: unknown, fallbackIndex: number): NavItem | null 
   };
 }
 
+function sanitizeHomePreviewSection(
+  value: unknown,
+  fallbackIndex: number,
+): HomePreviewSection | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const entry = value as Partial<HomePreviewSection>;
+  const title = typeof entry.title === "string" ? entry.title.trim() : "";
+  const body = typeof entry.body === "string" ? entry.body.trim() : "";
+
+  if (!title || !body) {
+    return null;
+  }
+
+  const idSource =
+    typeof entry.id === "string" && entry.id.trim()
+      ? entry.id.trim()
+      : `${title}-${fallbackIndex + 1}`;
+
+  return {
+    id: slugifyTitle(idSource) || `home-preview-${fallbackIndex + 1}`,
+    title,
+    body,
+  };
+}
+
 function sanitizeSiteConfig(value: unknown): SiteConfig {
   if (!value || typeof value !== "object") {
     return defaultSiteConfig;
@@ -125,10 +168,18 @@ function sanitizeSiteConfig(value: unknown): SiteConfig {
         .map((item, index) => sanitizeNavItem(item, index))
         .filter((item): item is NavItem => item !== null)
     : defaultSiteConfig.navLinks;
+  const homePreviewSections = Array.isArray(entry.homePreviewSections)
+    ? entry.homePreviewSections
+        .map((item, index) => sanitizeHomePreviewSection(item, index))
+        .filter((item): item is HomePreviewSection => item !== null)
+    : defaultSiteConfig.homePreviewSections;
 
   return {
     siteTitle,
     footerText,
+    homePreviewSections: homePreviewSections.length
+      ? homePreviewSections
+      : defaultSiteConfig.homePreviewSections,
     navLinks: navLinks.length ? navLinks : defaultSiteConfig.navLinks,
   };
 }
@@ -285,6 +336,7 @@ export async function upsertPost(input: EditableBlogPost) {
 
   return {
     post: savedPosts.find((entry) => entry.slug === slug) ?? nextPost,
+    previousSlug: previousSlug || undefined,
     posts: savedPosts,
     storageMode: getContentStorageMode(),
   };

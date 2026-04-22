@@ -36,6 +36,9 @@ export async function POST(request: Request) {
 
     revalidatePath("/");
     revalidatePath("/blog");
+    if (result.previousSlug && result.previousSlug !== result.post.slug) {
+      revalidatePath(`/blog/${result.previousSlug}`);
+    }
     revalidatePath(`/blog/${result.post.slug}`);
 
     return NextResponse.json(result);

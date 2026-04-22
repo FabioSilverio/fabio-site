@@ -1,6 +1,18 @@
 {
   "siteTitle": "fabio",
   "footerText": "All Rights Reserved.",
+  "homePreviewSections": [
+    {
+      "id": "minimal-home-sharp-internals",
+      "title": "Minimal home, sharp internals.",
+      "body": "A home clean enough to feel deliberate, with the logo centered and motion reserved for the moments that matter."
+    },
+    {
+      "id": "shared-transition-into-the-top-bar",
+      "title": "Shared transition into the top bar.",
+      "body": "The home keeps the logo readable as it docks into the top area, with the fixed mark staying above the header gradient on scroll."
+    }
+  ],
   "navLinks": [
     {
       "id": "blog",

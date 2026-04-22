@@ -12,8 +12,15 @@ export type NavItem = {
   label: string;
 };
 
+export type HomePreviewSection = {
+  body: string;
+  id: string;
+  title: string;
+};
+
 export type SiteConfig = {
   footerText: string;
+  homePreviewSections: HomePreviewSection[];
   navLinks: NavItem[];
   siteTitle: string;
 };

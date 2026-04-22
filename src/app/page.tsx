@@ -7,6 +7,7 @@ export default async function Home() {
   return (
     <HomeScene
       brandText={siteConfig.siteTitle}
+      homePreviewSections={siteConfig.homePreviewSections}
       latestPosts={posts}
       navItems={siteConfig.navLinks}
     />

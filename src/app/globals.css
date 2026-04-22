@@ -223,7 +223,7 @@ a {
 
 .hero-nav {
   margin-top: 26vh;
-  opacity: calc(1 - (var(--hero-progress, 0) * 1.45));
+  opacity: calc(1 - (var(--hero-progress, 0) * 4));
   transform: translateY(calc(var(--hero-progress, 0) * -24px));
   transition:
     opacity 120ms linear,
@@ -580,6 +580,19 @@ a {
 .admin-link-list {
   display: grid;
   gap: 10px;
+}
+
+.admin-highlight-list {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-highlight-row {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: #050505;
 }
 
 .admin-link-row {

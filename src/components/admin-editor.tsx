@@ -7,6 +7,7 @@ import {
   slugifyTitle,
   sortPosts,
   type BlogPost,
+  type HomePreviewSection,
   type SiteConfig,
 } from "@/lib/cms-shared";
 
@@ -190,7 +191,7 @@ export function AdminEditor({
             <h1 className="section-title admin-title">Admin</h1>
             <p className="admin-copy">
               Painel para criar, editar e apagar posts, alem de ajustar titulo,
-              footer e os links da topbar.
+              footer, blocos da home e os links da topbar.
             </p>
           </div>
 
@@ -354,6 +355,96 @@ export function AdminEditor({
                     value={siteConfig.footerText}
                   />
                 </label>
+
+                <div className="admin-links-head">
+                  <span className="admin-links-label">Blocos da home</span>
+                  <button
+                    className="admin-button ghost"
+                    onClick={() =>
+                      setSiteConfig((current) => ({
+                        ...current,
+                        homePreviewSections: [
+                          ...current.homePreviewSections,
+                          {
+                            id: `home-preview-${current.homePreviewSections.length + 1}`,
+                            title: "Novo bloco",
+                            body: "Descreva este bloco da home aqui.",
+                          },
+                        ],
+                      }))
+                    }
+                    type="button"
+                  >
+                    adicionar bloco
+                  </button>
+                </div>
+
+                <div className="admin-highlight-list">
+                  {siteConfig.homePreviewSections.map((section, index) => (
+                    <div className="admin-highlight-row" key={section.id}>
+                      <label>
+                        <span>Titulo do bloco</span>
+                        <input
+                          onChange={(event) =>
+                            setSiteConfig((current) => ({
+                              ...current,
+                              homePreviewSections: current.homePreviewSections.map(
+                                (entry, entryIndex): HomePreviewSection =>
+                                  entryIndex === index
+                                    ? {
+                                        ...entry,
+                                        id:
+                                          slugifyTitle(event.target.value) ||
+                                          `home-preview-${entryIndex + 1}`,
+                                        title: event.target.value,
+                                      }
+                                    : entry,
+                              ),
+                            }))
+                          }
+                          value={section.title}
+                        />
+                      </label>
+
+                      <label>
+                        <span>Texto do bloco</span>
+                        <textarea
+                          onChange={(event) =>
+                            setSiteConfig((current) => ({
+                              ...current,
+                              homePreviewSections: current.homePreviewSections.map(
+                                (entry, entryIndex): HomePreviewSection =>
+                                  entryIndex === index
+                                    ? {
+                                        ...entry,
+                                        body: event.target.value,
+                                      }
+                                    : entry,
+                              ),
+                            }))
+                          }
+                          rows={4}
+                          value={section.body}
+                        />
+                      </label>
+
+                      <button
+                        className="admin-button danger"
+                        onClick={() =>
+                          setSiteConfig((current) => ({
+                            ...current,
+                            homePreviewSections: current.homePreviewSections.filter(
+                              (_, entryIndex) => entryIndex !== index,
+                            ),
+                          }))
+                        }
+                        type="button"
+                      >
+                        remover bloco
+                      </button>
+                    </div>
+                  ))}
+                </div>
 
                 <div className="admin-links-head">
                   <span className="admin-links-label">Links da topbar</span>
